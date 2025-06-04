@@ -44,7 +44,12 @@ public:
     explicit CFeeRate(const CAmount& _nSatoshisPerK): nSatoshisPerK(_nSatoshisPerK) { }
     /** Constructor for a fee rate in satoshis per kB. The size in bytes must not exceed (2^63 - 1)*/
     CFeeRate(const CAmount& nFeePaid, size_t nBytes);
-    CFeeRate(const CFeeRate& other) { nSatoshisPerK = other.nSatoshisPerK; }
+    CFeeRate& operator=(const CFeeRate& other) {
+        if (this != &other) {
+            nSatoshisPerK = other.nSatoshisPerK;
+        }
+    return *this;
+    }
     /**
      * Return the fee in satoshis for the given size in bytes.
      */
